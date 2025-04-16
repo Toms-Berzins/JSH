@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Box, Image } from 'lucide-react';
 import { portfolioItems } from '../../data/portfolioData';
 
 const Portfolio: React.FC = () => {
+  const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
+
+  const handleImageError = (id: number) => {
+    console.warn(`Failed to load image for project ID: ${id}`);
+    setImageErrors(prev => ({ ...prev, [id]: true }));
+  };
+
   return (
     <section id="portfolio" className="py-20 md:py-28 bg-blue-50/30 dark:bg-blue-900/10">
       <div className="max-w-7xl mx-auto px-4">
@@ -34,11 +42,25 @@ const Portfolio: React.FC = () => {
               transition={{ delay: index * 0.1 }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-              <img
-                src={item.img}
-                alt={item.title}
-                className="w-full h-full object-cover"
-              />
+              
+              {imageErrors[item.id] ? (
+                <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
+                  {item.category === 'medical' && <Box className="w-16 h-16 text-blue-500 opacity-70" />}
+                  {item.category === 'product' && <Image className="w-16 h-16 text-blue-500 opacity-70" />}
+                  {!['medical', 'product'].includes(item.category) && (
+                    <Box className="w-16 h-16 text-blue-500 opacity-70" />
+                  )}
+                </div>
+              ) : (
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                  onError={() => handleImageError(item.id)}
+                  loading="lazy"
+                />
+              )}
+              
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20 text-white">
                 <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
                 <p className="text-sm text-gray-200">{item.description}</p>
