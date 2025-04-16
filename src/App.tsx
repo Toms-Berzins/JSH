@@ -1,3 +1,4 @@
+// Main application component with dark mode support and 3D printing features
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Scan as Scan3d, Printer as Printer3d, Settings2, ChevronRight, Users, Sun, Moon, Cuboid as Cube, Building2, Stethoscope, Factory, Upload, MessageSquare, ChevronDown } from 'lucide-react';
