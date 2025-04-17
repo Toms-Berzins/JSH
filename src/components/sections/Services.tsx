@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Scan, Wrench, File, Paintbrush, ChevronDown, ArrowRight } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ServiceItem } from '../../types/service.types';
 
 // Define icons map (optional but cleaner)
 const serviceIcons: { [key: string]: React.ReactNode } = {
-  scan: <Scan className="h-8 w-8" />,
-  model: <File className="h-8 w-8" />,
+  scan: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744875409/scan_j79xcw.png" alt="Scan service icon" className="h-40 w-40" />,
+  model: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744875844/model_oyxjs9.png" alt="Model service icon" className="h-40 w-40" />,
   print: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744873689/print_drb70n.png" alt="Print service icon" className="h-40 w-40" />,
-  postprocess: <Wrench className="h-8 w-8" />,
-  finish: <Paintbrush className="h-8 w-8" />,
+  postprocess: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744876071/postprocess_o5kt1q.png" alt="Postprocess service icon" className="h-40 w-40" />,
+  finish: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744876210/finish_v1usqk.png" alt="Finish service icon" className="h-40 w-40" />,
 };
 
 const Services: React.FC = () => {
@@ -25,7 +25,7 @@ const Services: React.FC = () => {
   const services = Array.isArray(servicesData) 
     ? servicesData.map(service => ({
         ...service,
-        icon: serviceIcons[service.key] || <File className="h-8 w-8" />
+        icon: serviceIcons[service.key] || <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744875844/model_oyxjs9.png" alt="Default service icon" className="h-40 w-40" />
       }))
     : []; // Provide an empty array fallback if translation fails
 
