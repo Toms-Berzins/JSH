@@ -1,6 +1,7 @@
 import React from 'react';
 
 export interface ServiceItem {
+  key: string;
   icon: React.ReactNode;
   title: string;
   description: string;

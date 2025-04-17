@@ -1,0 +1,204 @@
+{
+  "navbar": {
+    "home": "Sākums",
+    "services": "Pakalpojumi",
+    "portfolio": "Portfolio",
+    "faq": "BUJ",
+    "contact": "Kontakti"
+  },
+  "hero": {
+    "greeting": "Sveiki, mēs esam",
+    "name": "BK3D Print",
+    "tagline": "Pārnesam jūsu idejas no fiziskās pasaules uz digitālo.",
+    "description": "Specializējamies fotogrammetrijā balstītā 3D skenēšanā un augstas kvalitātes 3D drukāšanā.",
+    "cta": "Apskatīt mūsu darbus"
+  },
+  "services": {
+    "title": "Ko mēs piedāvājam",
+    "sectionTitle": "Mūsu pakalpojumi",
+    "benefitsTitle": "Priekšrocības",
+    "applicationsTitle": "Pielietojums",
+    "processTitle": "Process",
+    "requestButtonPrefix": "Pieteikt",
+    "list": [
+      {
+        "key": "scan",
+        "title": "3D Skenēšana",
+        "description": "Precīza fotogrammetrijas skenēšana ar Poly.cam, lai izveidotu detalizētus digitālus modeļus.",
+        "detailedDescription": "Mūsu fotogrammetrijā balstītā 3D skenēšana ļauj izveidot augstas precizitātes digitālus objektu dublikātus. Izmantojot modernās Poly.cam tehnoloģijas un augstas izšķirtspējas kameras, mēs uztveram katru objekta detaļu ar precizitāti.",
+        "benefits": [
+          "Nedestruktīva fizisko objektu digitalizācija",
+          "Ļoti detalizēti modeļi dažādiem pielietojumiem",
+          "Ātrāks izpildes laiks salīdzinājumā ar manuālu modelēšanu",
+          "Precīzi izmēri un tekstūras"
+        ],
+        "applications": [
+          "Kultūras mantojuma saglabāšana un dokumentēšana",
+          "Mākslas darbu reproducēšana un arhivēšana",
+          "Rezerves daļu reversā inženierija",
+          "Digitālo objektu izveide AR/VR vajadzībām"
+        ],
+        "processSummary": "Mēs uzņemam simtiem fotogrāfiju no dažādiem leņķiem, apstrādājam tās specializētā programmā un piegādājam optimizētu 3D modeli gatavu drukāšanai vai digitālai lietošanai."
+      },
+      {
+        "key": "model",
+        "title": "3D Modelēšana",
+        "description": "Profesionāla 3D modeļu izveide un optimizācija, tostarp tīkla tīrīšana un sagatavošana drukai.",
+        "detailedDescription": "Mūsu 3D modelēšanas pakalpojumi pārvērš idejas detalizētos digitālos modeļos. Neatkarīgi no tā, vai sākam no nulles vai uzlabojam skenētos datus, mēs izstrādājam precīzus modeļus pielāgotus jūsu vajadzībām.",
+        "benefits": [
+          "Profesionāla kvalitāte ar optimālu topoloģiju",
+          "Modeļi pielāgoti specifiskiem pielietojumiem",
+          "Skenēto tīklu problēmu novēršana",
+          "Tehniskā precizitāte funkcionāliem elementiem"
+        ],
+        "applications": [
+          "Produktu dizains un prototipēšana",
+          "Arhitektūras vizualizācijas",
+          "Spēļu un animāciju aktīvi",
+          "Ražošanas sagatavošana"
+        ],
+        "processSummary": "Mēs strādājam pēc jūsu specifikācijām, veidojam detalizētus modeļus, optimizējam tīklus, pievienojam tekstūras un nodrošinām, ka modelis ir gatavs drukai vai digitālai lietošanai."
+      },
+      {
+        "key": "print",
+        "title": "3D Drukāšana",
+        "description": "Precīza FDM un sveķu drukāšana prototipiem, modeļiem un sērijveida detaļām.",
+        "detailedDescription": "Mēs piedāvājam gan FDM (kausēšanas nogulsnēšanas modelēšana), gan sveķu bāzētu 3D drukāšanu. FDM ir piemērots izturīgām detaļām, bet sveķu drukāšana nodrošina augstu detaļu precizitāti mazākiem objektiem.",
+        "benefits": [
+          "Ātra prototipu izgatavošana",
+          "Plaša materiālu izvēle",
+          "Izdevīga mazo sēriju ražošana",
+          "Kompleksas formas, kuras nav iespējams izgatavot tradicionāli"
+        ],
+        "applications": [
+          "Funkcionāli prototipi un testēšana",
+          "Mēroga modeļi un vizuāli prototipi",
+          "Pielāgoti instrumenti un stiprinājumi",
+          "Gatavās detaļas konkrētiem pielietojumiem"
+        ],
+        "processSummary": "Mēs sagatavojam jūsu 3D modeli drukai, izvēlamies piemērotāko tehnoloģiju un materiālu, un uzmanīgi izdrukājam objektu ar optimāliem iestatījumiem kvalitātei un izturībai."
+      },
+      {
+        "key": "postprocess",
+        "title": "Pēcapstrāde",
+        "description": "Pilna pēcapstrāde, ieskaitot balstu noņemšanu, slīpēšanu un virsmas apstrādi.",
+        "detailedDescription": "Mūsu pēcapstrādes pakalpojumi padara neapstrādātas 3D drukas par gataviem produktiem. Mēs rūpīgi noņemam atbalsta struktūras, izlīdzinām virsmas un uzklājam nepieciešamās apstrādes, lai uzlabotu funkcionalitāti un izskatu.",
+        "benefits": [
+          "Profesionāla apdares kvalitāte",
+          "Uzlabotas mehāniskās īpašības",
+          "Uzlabota virsmas estētika",
+          "Sagatavošana turpmākai apstrādei vai lietošanai"
+        ],
+        "applications": [
+          "Demonstrācijas modeļi ar gludām virsmām",
+          "Funkcionāli prototipi ar precīzām pielaidēm",
+          "Detaļas ar specifiskām virsmas prasībām",
+          "Sagatavošana krāsošanai vai pārklāšanai"
+        ],
+        "processSummary": "Mēs rūpīgi noņemam balstus, slīpējam virsmas un pielietojam speciālas apstrādes, lai sasniegtu vēlamo apdares kvalitāti jūsu 3D drukas objektiem."
+      },
+      {
+        "key": "finish",
+        "title": "Individuāla Apdare",
+        "description": "Profesionāla krāsošana un virsmas apdare pēc jūsu prasībām.",
+        "detailedDescription": "Mūsu individuālās apdares pakalpojumi uzlabo 3D drukātos objektus ar profesionālu krāsošanu, pārklājumiem un dekoratīvām apstrādēm, padarot tos piemērotus prezentācijām un gala lietošanai.",
+        "benefits": [
+          "Profesionāla estētiskā kvalitāte",
+          "UV un laika apstākļu noturības iespējas",
+          "Pielāgotas krāsas un pārklājumi",
+          "Uzlabota izturība gala lietojumam"
+        ],
+        "applications": [
+          "Arhitektūras modeļi un prezentācijas",
+          "Produktu prototipi klientu demonstrācijām",
+          "Demonstrācijas modeļi un replikas",
+          "Funkcionālas detaļas ar specifiskām virsmas īpašībām"
+        ],
+        "processSummary": "Mēs gruntējam, krāsojam un apstrādājam jūsu 3D drukas objektus, izmantojot profesionālas tehnikas un materiālus, lai sasniegtu vēlamo izskatu un funkcionalitāti."
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Mūsu darbi",
+    "description": "Izlase no mūsu jaunākajiem projektiem.",
+    "list": [
+      { "id": 1, "title": "Medicīnisks Modelis", "description": "Detalizēts anatomisks modelis ķirurģiskai plānošanai." },
+      { "id": 2, "title": "Produkta Prototips", "description": "Funkcionāls prototips lietotāja testēšanai." },
+      { "id": 3, "title": "Arhitektūras Mēroga Modelis", "description": "Augstas detalizācijas ēkas modelis prezentācijām." },
+      { "id": 4, "title": "Pielāgota Figūriņa", "description": "Personalizēta skenēta un drukāta figūriņa." },
+      { "id": 5, "title": "Mehāniska Detaļa", "description": "Apgriezti izstrādāta un izdrukāta rezerves daļa." },
+      { "id": 6, "title": "Mākslas Skulptūra", "description": "Komplekss mākslas darbs, radīts ar 3D druku." }
+    ],
+    "privacyNote": "Iesniedzot šo formu, jūs piekrītat mūsu privātuma politikai un lietošanas noteikumiem."
+  },
+  "faq": {
+    "title": "Biežāk Uzdotie Jautājumi",
+    "list": [
+      {
+        "question": "Kādus failu formātus jūs pieņemat/piegādājat?",
+        "answer": "Parasti strādājam ar .STL, .OBJ un .PLY failiem, bet varam apspriest arī citus formātus. Galvenokārt piegādājam optimizētus .STL failus, gatavus drukai."
+      },
+      {
+        "question": "Kāds ir izpildes laiks?",
+        "answer": "Tas atkarīgs no projekta sarežģītības, objekta izmēra un drukāšanas ilguma. Vienkāršus projektus iespējams pabeigt pāris dienu laikā, bet lielākiem var būt nepieciešama nedēļa vai ilgāk. Precīzāku novērtējumu sniegsim pēc projekta izvērtēšanas."
+      },
+      {
+        "question": "Kādus materiālus jūs izmantojat drukāšanā?",
+        "answer": "Piedāvājam dažādus FDM plastikātus kā PLA, PETG un ABS izturīgām detaļām, kā arī standartus sveķus augstas detaļu precizitātes modeļiem. Ja jums ir specifiskas materiālu prasības (piemēram, elastīgs vai karstumizturīgs), informējiet mūs, un mēs apspriedīsim iespējas."
+      },
+      {
+        "question": "Vai varat skenēt lielus objektus vai telpas?",
+        "answer": "Jā, fotogrammetrija ir daudzpusīga. Mēs varam skenēt gan mazas figūriņas, gan lielākus objektus, piemēram, mēbeles. Lielu telpu, piemēram, istabu vai ēku fasāžu, skenēšana ir iespējama, taču atkarīga no projekta apjoma un nepieciešamās detaļu precizitātes."
+      },
+      {
+        "question": "Kāda ir jūsu skenēšanas un drukas precizitāte?",
+        "answer": "Fotogrammetrijas skenēšanas precizitāte ir atkarīga no objekta izmēra un tekstūras, parasti precizitāte ir milimetru diapazonā. FDM drukas precizitāte parasti ir +/- 0.2 mm, bet sveķu drukāšana nodrošina augstāku precizitāti, bieži vien ar slāņu augstumu zem 0.1 mm."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Sazinieties ar mums",
+    "description": "Ir ideja projektam vai vēlaties uzzināt vairāk? Rakstiet mums!",
+    "send": "Pieteikt cenu piedāvājumu",
+    "submitting": "Nosūtīšana...",
+    "fields": {
+      "name": { "label": "Vārds" },
+      "email": { "label": "E-pasts" },
+      "phone": { "label": "Telefona numurs (nav obligāts)" },
+      "projectType": {
+        "label": "Projekta tips",
+        "select": "Izvēlieties pakalpojumu",
+        "custom": "Cits / Pielāgots projekts"
+      },
+      "message": {
+        "label": "Projekta detaļas",
+        "placeholder": "Lūdzu, aprakstiet projekta prasības, tostarp izmērus, materiāla izvēli un jebkādas specifiskas vajadzības."
+      }
+    },
+    "validation": {
+      "nameRequired": "Nepieciešams vārds",
+      "emailRequired": "Nepieciešams e-pasts",
+      "emailInvalid": "Nederīga e-pasta adrese",
+      "messageRequired": "Lūdzu, aprakstiet projektu"
+    },
+    "success": {
+      "title": "Paldies!",
+      "message": "Jūsu ziņojums ir veiksmīgi nosūtīts. Mēs drīz ar jums sazināsimies."
+    },
+    "error": {
+      "message": "Radās kļūda, nosūtot formu. Lūdzu, mēģiniet vēlreiz."
+    },
+    "info": {
+      "call": { "title": "Zvaniet mums", "detail": "+371 20 123 456" },
+      "email": { "title": "Rakstiet mums", "detail": "info@riga3d.lv" },
+      "address": { "title": "Apmeklējiet mūs", "detail": "Rīga, Latvija" }
+    },
+    "privacyNote": "Iesniedzot šo formu, jūs piekrītat mūsu privātuma politikai un lietošanas noteikumiem."
+  },
+  "footer": {
+    "rights": "© 2025 BK3D Print. Visas tiesības aizsargātas."
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Mainīt valodu"
+  }
+}

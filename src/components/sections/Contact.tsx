@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Contact: React.FC = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -47,17 +50,17 @@ const Contact: React.FC = () => {
     } = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t('contact.validation.nameRequired');
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('contact.validation.emailRequired');
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)) {
-      newErrors.email = 'Invalid email address';
+      newErrors.email = t('contact.validation.emailInvalid');
     }
     
     if (!formData.message.trim()) {
-      newErrors.message = 'Please describe your project';
+      newErrors.message = t('contact.validation.messageRequired');
     }
     
     setErrors(newErrors);
@@ -108,7 +111,7 @@ const Contact: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl md:text-4xl font-bold mb-6"
         >
-          Start Your 3D Project
+          {t('contact.title')}
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -117,17 +120,17 @@ const Contact: React.FC = () => {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="text-lg text-gray-600 dark:text-gray-300 mb-10"
         >
-          Ready to bring your ideas to life? Contact us to discuss your 3D scanning or printing needs.
+          {t('contact.description')}
         </motion.p>
 
         {formStatus.submitted ? (
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-6 bg-green-100 text-green-700 rounded-lg shadow-md mb-8"
+            className="p-6 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg shadow-md mb-8"
           >
-            <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
-            <p>Your message has been sent successfully. We'll get back to you shortly.</p>
+            <h3 className="text-xl font-semibold mb-2">{t('contact.success.title')}</h3>
+            <p>{t('contact.success.message')}</p>
           </motion.div>
         ) : (
           <motion.form
@@ -139,7 +142,7 @@ const Contact: React.FC = () => {
             onSubmit={handleSubmit}
           >
             <div>
-              <label htmlFor="name" className="block text-sm font-medium mb-1">Name <span className="text-red-500">*</span></label>
+              <label htmlFor="name" className="block text-sm font-medium mb-1">{t('contact.fields.name.label')} <span className="text-red-500">*</span></label>
               <input 
                 type="text" 
                 id="name" 
@@ -152,7 +155,7 @@ const Contact: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-1">Email <span className="text-red-500">*</span></label>
+              <label htmlFor="email" className="block text-sm font-medium mb-1">{t('contact.fields.email.label')} <span className="text-red-500">*</span></label>
               <input 
                 type="email" 
                 id="email" 
@@ -165,7 +168,7 @@ const Contact: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone Number (optional)</label>
+              <label htmlFor="phone" className="block text-sm font-medium mb-1">{t('contact.fields.phone.label')}</label>
               <input 
                 type="tel" 
                 id="phone" 
@@ -177,7 +180,7 @@ const Contact: React.FC = () => {
             </div>
             
             <div>
-              <label htmlFor="projectType" className="block text-sm font-medium mb-1">Project Type</label>
+              <label htmlFor="projectType" className="block text-sm font-medium mb-1">{t('contact.fields.projectType.label')}</label>
               <select 
                 id="projectType" 
                 name="projectType"
@@ -185,17 +188,17 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-inner-subtle"
               >
-                <option value="">Select a service</option>
-                <option value="scanning">3D Scanning</option>
-                <option value="modeling">3D Modeling</option>
-                <option value="printing">3D Printing</option>
-                <option value="post-processing">Post-Processing</option>
-                <option value="custom">Custom Project</option>
+                <option value="">{t('contact.fields.projectType.select')}</option>
+                {(t('services.list', { returnObjects: true }) as Array<{key: string; title: string}> || [])
+                  .map(service => (
+                  <option key={service.key} value={service.key}>{service.title}</option>
+                ))}
+                <option value="custom">{t('contact.fields.projectType.custom')}</option>
               </select>
             </div>
             
             <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-1">Project Details <span className="text-red-500">*</span></label>
+              <label htmlFor="message" className="block text-sm font-medium mb-1">{t('contact.fields.message.label')} <span className="text-red-500">*</span></label>
               <textarea 
                 id="message" 
                 name="message"
@@ -203,14 +206,14 @@ const Contact: React.FC = () => {
                 onChange={handleChange}
                 rows={4} 
                 className={`w-full px-4 py-2 rounded-lg border ${errors.message ? 'border-red-500' : 'border-gray-300'} dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none shadow-inner-subtle`}
-                placeholder="Please describe your project requirements, including size, material preferences, and any specific needs."
+                placeholder={t('contact.fields.message.placeholder')}
               ></textarea>
               {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
             </div>
             
             {formStatus.error && (
-              <div className="p-3 bg-red-100 text-red-700 rounded-lg">
-                <p>There was an error submitting your form. Please try again.</p>
+              <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg">
+                <p>{t('contact.error.message')}</p>
               </div>
             )}
             
@@ -219,11 +222,11 @@ const Contact: React.FC = () => {
               disabled={formStatus.submitting}
               className={`w-full py-3 px-6 bg-blue-600 text-white rounded-full font-medium transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg ${formStatus.submitting ? 'opacity-70 cursor-not-allowed' : 'hover:bg-blue-700'}`}
             >
-              {formStatus.submitting ? 'Sending...' : 'Request Quote'}
+              {formStatus.submitting ? t('contact.submitting') : t('contact.send')}
             </button>
             
             <p className="text-xs text-center text-gray-500 mt-4">
-              By submitting this form, you agree to our privacy policy and terms of service.
+              {t('contact.privacyNote')}
             </p>
           </motion.form>
         )}
@@ -235,8 +238,8 @@ const Contact: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium mb-2">Call Us</h3>
-            <p className="text-gray-600 dark:text-gray-300">+371 20 123 456</p>
+            <h3 className="text-lg font-medium mb-2">{t('contact.info.call.title')}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{t('contact.info.call.detail')}</p>
           </div>
           
           <div className="text-center">
@@ -245,8 +248,8 @@ const Contact: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium mb-2">Email Us</h3>
-            <p className="text-gray-600 dark:text-gray-300">info@riga3d.lv</p>
+            <h3 className="text-lg font-medium mb-2">{t('contact.info.email.title')}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{t('contact.info.email.detail')}</p>
           </div>
           
           <div className="text-center">
@@ -256,8 +259,8 @@ const Contact: React.FC = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </div>
-            <h3 className="text-lg font-medium mb-2">Visit Us</h3>
-            <p className="text-gray-600 dark:text-gray-300">Riga, Latvia</p>
+            <h3 className="text-lg font-medium mb-2">{t('contact.info.address.title')}</h3>
+            <p className="text-gray-600 dark:text-gray-300">{t('contact.info.address.detail')}</p>
           </div>
         </div>
       </div>

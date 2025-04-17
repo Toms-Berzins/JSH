@@ -1,8 +1,19 @@
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import AccordionItem from '../common/AccordionItem';
-import { faqs } from '../../data/faqData';
+
+// Define type for FAQ items loaded from translation
+interface FAQItem {
+  question: string;
+  answer: string;
+}
 
 const FAQ: React.FC = () => {
+  const { t } = useTranslation();
+
+  // Load FAQ data from translations
+  const faqs = t('faq.list', { returnObjects: true }) as FAQItem[];
+
   return (
     <section id="faq" className="py-20 md:py-28"> {/* Increased padding */}
       <div className="max-w-3xl mx-auto px-4">
@@ -13,13 +24,16 @@ const FAQ: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl md:text-4xl font-bold text-center mb-16 md:mb-20" // Added scroll animation
         >
-          Have Questions?
+          {t('faq.title')}
         </motion.h2>
         <div className="space-y-5"> {/* Increased spacing */}
-          {faqs.map((faq, index) => (
-            // Use the common AccordionItem component
-            <AccordionItem key={index} question={faq.question} answer={faq.answer} />
-          ))}
+          {Array.isArray(faqs) ? (
+            faqs.map((faq, index) => (
+              <AccordionItem key={index} question={faq.question} answer={faq.answer} />
+            ))
+          ) : (
+            <p className="text-center text-gray-500">Could not load FAQ data.</p>
+          )}
         </div>
       </div>
     </section>

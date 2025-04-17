@@ -1,0 +1,204 @@
+{
+  "navbar": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "faq": "FAQ",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, we are",
+    "name": "BK3D Print",
+    "tagline": "Bringing your ideas from the physical to the digital world.",
+    "description": "Specializing in photogrammetry-based 3D scanning and high-quality 3D printing.",
+    "cta": "See Our Work"
+  },
+  "services": {
+    "title": "What We Offer",
+    "sectionTitle": "Our Services",
+    "benefitsTitle": "Benefits",
+    "applicationsTitle": "Applications",
+    "processTitle": "Process",
+    "requestButtonPrefix": "Request",
+    "list": [
+      {
+        "key": "scan",
+        "title": "3D Scanning",
+        "description": "Precise photogrammetry scanning using Poly.cam to create detailed digital models.",
+        "detailedDescription": "Our photogrammetry-based 3D scanning service creates highly detailed digital replicas of physical objects. Using advanced Poly.cam technology and high-resolution cameras, we capture every nuance of your items with precision.",
+        "benefits": [
+          "Non-destructive digitization of physical objects",
+          "Highly detailed models suitable for various applications",
+          "Quick turnaround compared to manual modeling",
+          "Accurate dimensions and textures"
+        ],
+        "applications": [
+          "Heritage preservation and documentation",
+          "Art reproduction and archiving",
+          "Reverse engineering of parts",
+          "Creating digital assets for AR/VR"
+        ],
+        "processSummary": "We capture hundreds of photos of your object from various angles, process them through specialized software, and deliver a clean, optimized 3D model ready for printing or digital use."
+      },
+      {
+        "key": "model",
+        "title": "3D Modeling",
+        "description": "Professional 3D model creation and optimization, including mesh cleaning and preparation for printing.",
+        "detailedDescription": "Our 3D modeling services transform concepts into detailed digital models. Whether starting from scratch or enhancing scan data, we create precision models optimized for your specific application.",
+        "benefits": [
+          "Professional-grade models with optimal topology",
+          "Models optimized for specific use cases",
+          "Fixing mesh issues from scans",
+          "Technical accuracy for functional parts"
+        ],
+        "applications": [
+          "Product design and prototyping",
+          "Architectural visualizations",
+          "Game and animation assets",
+          "Manufacturing preparation"
+        ],
+        "processSummary": "We work with your specifications to create detailed 3D models, carefully optimizing meshes, adding textures, and ensuring they're ready for printing or digital applications."
+      },
+      {
+        "key": "print",
+        "title": "3D Printing",
+        "description": "Precise FDM and resin printing services for prototypes, models, and production parts.",
+        "detailedDescription": "We offer both FDM (Fused Deposition Modeling) and resin-based 3D printing services. FDM provides durable, functional parts while our resin printing delivers extraordinary detail for smaller objects.",
+        "benefits": [
+          "Rapid prototyping capabilities",
+          "Wide range of materials available",
+          "Cost-effective small batch production",
+          "Complex geometries not possible with traditional manufacturing"
+        ],
+        "applications": [
+          "Functional prototypes and testing",
+          "Scale models and visual prototypes",
+          "Custom tools and fixtures",
+          "End-use parts for specific applications"
+        ],
+        "processSummary": "We prepare your 3D model for printing, select the appropriate technology and material for your needs, and carefully print your object with optimal settings for quality and durability."
+      },
+      {
+        "key": "postprocess",
+        "title": "Post-Processing",
+        "description": "Comprehensive finishing services including support removal, sanding, and surface treatment.",
+        "detailedDescription": "Our post-processing services transform raw 3D prints into refined final products. We carefully remove support structures, smooth surfaces, and apply necessary treatments to enhance functionality and appearance.",
+        "benefits": [
+          "Professional finish quality",
+          "Improved mechanical properties",
+          "Enhanced surface aesthetics",
+          "Preparation for further finishing or use"
+        ],
+        "applications": [
+          "Display models requiring smooth surfaces",
+          "Functional prototypes needing precise tolerances",
+          "Parts requiring specific surface quality",
+          "Preparation for painting or coating"
+        ],
+        "processSummary": "We meticulously remove support structures, sand and smooth surfaces, and apply specialized treatments to achieve the desired finish quality for your 3D printed objects."
+      },
+      {
+        "key": "finish",
+        "title": "Custom Finishing",
+        "description": "Professional painting and surface finishing to meet your specific requirements.",
+        "detailedDescription": "Our custom finishing services elevate 3D printed objects with professional-grade painting, coating, and decorative applications that transform basic prints into showcase-worthy pieces.",
+        "benefits": [
+          "Professional aesthetic quality",
+          "UV and weather resistance options",
+          "Custom colors and finishes",
+          "Enhanced durability for end-use parts"
+        ],
+        "applications": [
+          "Architectural models and presentations",
+          "Product prototypes for client presentations",
+          "Display models and replicas",
+          "Functional parts requiring specific surface properties"
+        ],
+        "processSummary": "We prime, paint, and finish your 3D printed objects using professional techniques and materials to achieve your desired aesthetic and functional requirements."
+      }
+    ]
+  },
+  "portfolio": {
+    "title": "Our Work",
+    "description": "A selection of recent projects.",
+    "list": [
+      { "id": 1, "title": "Medical Model", "description": "Detailed anatomical print for surgical planning." },
+      { "id": 2, "title": "Product Prototype", "description": "Functional prototype for user testing." },
+      { "id": 3, "title": "Architectural Scale Model", "description": "High-detail building model for presentation." },
+      { "id": 4, "title": "Custom Figurine", "description": "Personalized scanned and printed figurine." },
+      { "id": 5, "title": "Mechanical Part", "description": "Reverse-engineered and printed replacement part." },
+      { "id": 6, "title": "Artistic Sculpture", "description": "Complex art piece realized through 3D printing." }
+    ],
+    "privacyNote": "By submitting this form, you agree to our privacy policy and terms of service."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "list": [
+      {
+        "question": "What file formats do you accept/provide?",
+        "answer": "We typically work with .STL, .OBJ, and .PLY files, but can discuss other formats if needed. We primarily deliver optimized .STL files ready for printing."
+      },
+      {
+        "question": "What is the turnaround time?",
+        "answer": "Turnaround depends on the project complexity, object size, and required print time. Simple scans and prints can take a few days, while larger projects might take a week or more. We provide an estimate upon project review."
+      },
+      {
+        "question": "What materials can you print with?",
+        "answer": "We offer a range of FDM plastics like PLA, PETG, and ABS for durable parts, and standard resins for high-detail models. If you have specific material requirements (e.g., flexible, heat-resistant), let us know, and we can discuss options."
+      },
+      {
+        "question": "Can you scan large objects or spaces?",
+        "answer": "Yes, photogrammetry is versatile. We can scan objects ranging from small figurines to larger items like furniture. Scanning larger areas like rooms or building facades is possible but depends on the project scope and required detail level."
+      },
+      {
+        "question": "What is the accuracy of your scans and prints?",
+        "answer": "Photogrammetry scanning accuracy depends on the object size and texture, typically within a millimeter range. FDM printing accuracy is usually around +/- 0.2mm, while resin printing offers higher precision, often below 0.1mm layer heights."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "description": "Have a project idea or want to learn more? Send us a message!",
+    "send": "Request Quote",
+    "submitting": "Sending...",
+    "fields": {
+      "name": { "label": "Name" },
+      "email": { "label": "Email" },
+      "phone": { "label": "Phone Number (Optional)" },
+      "projectType": {
+        "label": "Project Type",
+        "select": "Select a service",
+        "custom": "Other / Custom Project"
+      },
+      "message": {
+        "label": "Project Details",
+        "placeholder": "Please describe your project requirements, including size, material preferences, and any specific needs."
+      }
+    },
+    "validation": {
+      "nameRequired": "Name is required",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Invalid email address",
+      "messageRequired": "Please describe your project"
+    },
+    "success": {
+      "title": "Thank You!",
+      "message": "Your message has been sent successfully. We'll get back to you shortly."
+    },
+    "error": {
+      "message": "There was an error submitting your form. Please try again."
+    },
+    "info": {
+      "call": { "title": "Call Us", "detail": "+371 20 123 456" },
+      "email": { "title": "Email Us", "detail": "info@riga3d.lv" },
+      "address": { "title": "Visit Us", "detail": "Riga, Latvia" }
+    },
+    "privacyNote": "By submitting this form, you agree to our privacy policy and terms of service."
+  },
+  "footer": {
+    "rights": "© 2025 BK3D Print. All rights reserved."
+  },
+  "languageSwitcher": {
+    "changeLanguage": "Change language"
+  }
+} 

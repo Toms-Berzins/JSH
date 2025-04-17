@@ -1,15 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Box, Image } from 'lucide-react';
-import { portfolioItems } from '../../data/portfolioData';
+// import { Box, Image } from 'lucide-react'; // Box is unused
+import { Image } from 'lucide-react'; // Import only Image
+import { useTranslation } from 'react-i18next';
+import { portfolioItems as staticPortfolioData } from '../../data/portfolioData';
+import { PortfolioItem } from '../../types/portfolio.types';
+
+interface PortfolioTranslation {
+  id: number;
+  title: string;
+  description: string;
+}
 
 const Portfolio: React.FC = () => {
+  const { t } = useTranslation();
   const [imageErrors, setImageErrors] = useState<Record<number, boolean>>({});
 
   const handleImageError = (id: number) => {
     console.warn(`Failed to load image for project ID: ${id}`);
     setImageErrors(prev => ({ ...prev, [id]: true }));
   };
+
+  const translatedData = t('portfolio.list', { returnObjects: true }) as PortfolioTranslation[];
+
+  const portfolioItems = useMemo(() => {
+    if (!Array.isArray(translatedData)) {
+      console.error("Portfolio translation data is not an array:", translatedData);
+      return staticPortfolioData as PortfolioItem[];
+    }
+    
+    const translationMap = new Map(translatedData.map(item => [item.id, item]));
+
+    return staticPortfolioData.map(staticItem => {
+      const translation = translationMap.get(staticItem.id);
+      return {
+        ...staticItem,
+        title: translation?.title || `Project ${staticItem.id}`,
+        description: translation?.description || "",
+      };
+    });
+  }, [translatedData, staticPortfolioData]);
 
   return (
     <section id="portfolio" className="py-20 md:py-28 bg-blue-50/30 dark:bg-blue-900/10">
@@ -21,7 +51,7 @@ const Portfolio: React.FC = () => {
           transition={{ duration: 0.5 }}
           className="text-3xl md:text-4xl font-bold text-center mb-16 md:mb-20"
         >
-          Our Projects
+          {t('portfolio.title')}
         </motion.h2>
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[250px] md:auto-rows-[300px]"
@@ -45,11 +75,7 @@ const Portfolio: React.FC = () => {
               
               {imageErrors[item.id] ? (
                 <div className="w-full h-full flex items-center justify-center bg-gray-200 dark:bg-gray-700">
-                  {item.category === 'medical' && <Box className="w-16 h-16 text-blue-500 opacity-70" />}
-                  {item.category === 'product' && <Image className="w-16 h-16 text-blue-500 opacity-70" />}
-                  {!['medical', 'product'].includes(item.category) && (
-                    <Box className="w-16 h-16 text-blue-500 opacity-70" />
-                  )}
+                  <Image className="w-16 h-16 text-gray-400 opacity-70" />
                 </div>
               ) : (
                 <img
