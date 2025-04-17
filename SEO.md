@@ -45,6 +45,55 @@ Riga3D Solutions implements a comprehensive SEO strategy focused on establishing
 - Include alt text for all images
 - Use WebP format with fallbacks
 
+#### Image Optimization Implementation with Cloudinary
+```typescript
+// Using the ImageComponent with Cloudinary optimization
+import { ImageComponent } from '../utils/imageOptimization';
+
+<ImageComponent
+  src="/path/to/image.jpg"
+  alt="Description of the image"
+  width={800}
+  height={600}
+  className="my-image-class"
+/>
+
+// Using image optimization utilities with Cloudinary
+import { optimizeImage } from '../utils/imageUtils';
+
+const optimizedImage = optimizeImage(
+  '/path/to/image.jpg',
+  'Product showcase',
+  {
+    width: 800,
+    quality: 80,
+    format: 'webp',
+    crop: 'fill',
+    gravity: 'auto'
+  }
+);
+```
+
+##### Cloudinary Configuration
+1. Install dependencies:
+```bash
+npm install cloudinary
+```
+
+2. Set up environment variables in `.env`:
+```
+VITE_CLOUDINARY_CLOUD_NAME=your_cloud_name
+VITE_CLOUDINARY_API_KEY=your_api_key
+VITE_CLOUDINARY_API_SECRET=your_api_secret
+```
+
+3. Available optimization options:
+- `width`: Image width in pixels
+- `quality`: Image quality (1-100)
+- `format`: Output format ('webp', 'jpg', 'png')
+- `crop`: Cropping mode ('fill', 'fit', 'crop')
+- `gravity`: Focus point ('auto', 'face', 'center')
+
 ### Performance Optimization Goals
 - Core Web Vitals targets:
   - LCP (Largest Contentful Paint): < 2.5s
@@ -163,6 +212,7 @@ Riga3D Solutions implements a comprehensive SEO strategy focused on establishing
 - [Core Web Vitals Optimization](https://web.dev/vitals/)
 - [Google Search Central Documentation](https://developers.google.com/search/docs)
 - [Schema.org Documentation](https://schema.org/docs/schemas.html)
+- [Cloudinary Documentation](https://cloudinary.com/documentation)
 
 ## Maintenance and Updates
 - Document last updated: [Current Date]

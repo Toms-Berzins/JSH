@@ -1,7 +1,11 @@
+import cloudinary from '../config/cloudinary';
+
 export interface ImageOptimizationOptions {
   width?: number;
   quality?: number;
   format?: 'webp' | 'jpg' | 'png';
+  crop?: 'fill' | 'fit' | 'crop';
+  gravity?: 'auto' | 'face' | 'center';
 }
 
 export interface OptimizedImage {
@@ -30,10 +34,24 @@ export const optimizeImage = (
   const {
     width = 1920,
     quality = 80,
-    format = 'webp'
+    format = 'webp',
+    crop = 'fill',
+    gravity = 'auto'
   } = options;
 
-  const optimizedPath = `${imagePath}?w=${width}&q=${quality}&fmt=${format}`;
+  const transformations = [
+    { width },
+    { quality },
+    { fetch_format: format },
+    { crop },
+    { gravity }
+  ];
+
+  const optimizedPath = cloudinary.url(imagePath, {
+    transformation: transformations,
+    secure: true
+  });
+
   const altText = generateAltText(imagePath, context);
 
   return {

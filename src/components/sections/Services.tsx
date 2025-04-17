@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Scan, Printer, Wrench, File, Paintbrush, ChevronDown, ArrowRight } from 'lucide-react';
+import { Scan, Wrench, File, Paintbrush, ChevronDown, ArrowRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ServiceItem } from '../../types/service.types';
 
@@ -8,7 +8,7 @@ import { ServiceItem } from '../../types/service.types';
 const serviceIcons: { [key: string]: React.ReactNode } = {
   scan: <Scan className="h-8 w-8" />,
   model: <File className="h-8 w-8" />,
-  print: <Printer className="h-8 w-8" />,
+  print: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744873689/print_drb70n.png" alt="Print service icon" className="h-40 w-40" />,
   postprocess: <Wrench className="h-8 w-8" />,
   finish: <Paintbrush className="h-8 w-8" />,
 };

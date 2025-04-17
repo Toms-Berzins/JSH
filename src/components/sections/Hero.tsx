@@ -1,27 +1,32 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import ModernBackground from '../common/ModernBackground';
 
 const Hero: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="pt-40 pb-24 px-4 text-center"> {/* Increased padding */}
-      <div className="max-w-4xl mx-auto">
-        <motion.h2
+    <section className="relative min-h-screen flex items-center justify-center px-4 py-24 text-center overflow-hidden">
+      {/* Use the reusable background component */}
+      <ModernBackground />
+      
+      {/* Content with modern minimalistic design */}
+      <div className="relative max-w-4xl mx-auto">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-          className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-semibold mb-2"
+          className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4 tracking-wide"
         >
-          {t('hero.greeting')} <span className="font-bold">{t('hero.name')}</span>
-        </motion.h2>
+          {t('hero.greeting')} <span className="font-semibold">{t('hero.name')}</span>
+        </motion.div>
         
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
-          className="text-4xl md:text-6xl font-bold tracking-tight mb-4" // Adjusted size
+          className="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-gray-900 dark:text-white"
         >
           {t('hero.tagline')}
         </motion.h1>
@@ -30,20 +35,29 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, type: "spring", stiffness: 100, damping: 20 }}
-          className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8" // Adjusted size and spacing
+          className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
           {t('hero.description')}
         </motion.p>
         
-        <motion.a
-          href="#portfolio"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, type: "spring", stiffness: 100, damping: 15 }}
-          className="inline-block mt-6 px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
+          className="flex justify-center"
         >
-          {t('hero.cta')}
-        </motion.a>
+          <motion.a
+            href="#portfolio"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+          >
+            {t('hero.cta')}
+            <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
