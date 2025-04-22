@@ -1,16 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import ModernBackground from '../common/ModernBackground';
 
 const Hero: React.FC = () => {
   const { t } = useTranslation();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 py-24 text-center overflow-hidden">
-      {/* Use the reusable background component */}
-      <ModernBackground />
-      
       {/* Content with modern minimalistic design */}
       <div className="relative max-w-4xl mx-auto">
         <motion.div

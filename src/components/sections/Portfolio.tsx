@@ -39,10 +39,10 @@ const Portfolio: React.FC = () => {
         description: translation?.description || "",
       };
     });
-  }, [translatedData, staticPortfolioData]);
+  }, [translatedData]);
 
   return (
-    <section id="portfolio" className="py-20 md:py-28 bg-blue-50/30 dark:bg-blue-900/10">
+    <section id="portfolio" className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
