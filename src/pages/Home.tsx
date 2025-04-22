@@ -16,7 +16,7 @@ import {
 const Home: React.FC = () => {
   // Generate schemas for the home page
   const homeSchemas = [
-    generateLocalBusinessSchema(),
+    generateLocalBusinessSchema({}),
     generateOrganizationSchema(),
     generateWebSiteSchema(),
     generateBreadcrumbSchema([])

@@ -1,9 +1,17 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import { 
   BaseSchema,
   generateLocalBusinessSchema 
 } from '../utils/schemaTypes';
+import { generateHreflangTags, getPathWithoutLangPrefix } from '../utils/hreflang';
+
+interface HreflangLink {
+  rel: string;
+  hreflang: string;
+  href: string;
+}
 
 interface SEOProps {
   title?: string;
@@ -13,6 +21,7 @@ interface SEOProps {
   url?: string;
   type?: string;
   schemas?: Array<BaseSchema>;
+  hreflangTags?: Array<HreflangLink>;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -23,7 +32,14 @@ const SEO: React.FC<SEOProps> = ({
   url = 'https://riga3d.lv',
   type = 'website',
   schemas = [generateLocalBusinessSchema({})],
+  hreflangTags,
 }) => {
+  const location = useLocation();
+  
+  // If hreflangTags are not provided, generate them based on current path
+  const finalHreflangTags = hreflangTags || 
+    generateHreflangTags(getPathWithoutLangPrefix(location.pathname));
+  
   return (
     <Helmet>
       {/* Primary Meta Tags */}
@@ -45,6 +61,24 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
+      
+      {/* Hreflang tags for multilingual SEO */}
+      {finalHreflangTags.map((link, index) => (
+        link.hreflang ? (
+          <link 
+            key={`hreflang-${index}`} 
+            rel={link.rel} 
+            hrefLang={link.hreflang} 
+            href={link.href} 
+          />
+        ) : (
+          <link 
+            key={`canonical-${index}`} 
+            rel={link.rel} 
+            href={link.href} 
+          />
+        )
+      ))}
 
       {/* Schema.org markup */}
       {schemas.map((schema, index) => (
