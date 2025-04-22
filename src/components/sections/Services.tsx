@@ -6,7 +6,7 @@ import { ServiceItem } from '../../types/service.types';
 
 // Define icons map (optional but cleaner)
 const serviceIcons: { [key: string]: React.ReactNode } = {
-  scan: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744875409/scan_j79xcw.png" alt="Scan service icon" className="h-40 w-40" />,
+  scan: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1745211023/scan.png" alt="Scan service icon" className="h-40 w-40" />,
   model: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744875844/model_oyxjs9.png" alt="Model service icon" className="h-40 w-40" />,
   print: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744873689/print_drb70n.png" alt="Print service icon" className="h-40 w-40" />,
   postprocess: <img src="https://res.cloudinary.com/dhjfaktyk/image/upload/v1744876071/postprocess_o5kt1q.png" alt="Postprocess service icon" className="h-40 w-40" />,
@@ -34,7 +34,7 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className="py-20 md:py-28">
+    <section id="services" className="py-20 md:py-28 bg-white/60 dark:bg-gray-800/60">
       <div className="max-w-7xl mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -53,7 +53,7 @@ const Services: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: index * 0.15, type: "spring", stiffness: 80, damping: 15 }}
-              className={`rounded-2xl bg-white/90 dark:bg-gray-700/90 shadow-subtle hover:shadow-lg transition-all duration-300 backdrop-blur-sm overflow-hidden ${expandedIndex === index ? 'md:col-span-2 lg:col-span-2' : ''}`}
+              className={`rounded-2xl bg-white dark:bg-gray-700/80 shadow-subtle hover:shadow-lg transition-all duration-300 backdrop-blur-sm overflow-hidden ${expandedIndex === index ? 'md:col-span-2 lg:col-span-2' : ''}`}
             >
               <div
                 className="p-6 md:p-8 cursor-pointer flex flex-col h-full"
@@ -129,7 +129,7 @@ const Services: React.FC = () => {
                         href="#contact"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
-                        className="inline-block mt-6 px-4 py-2 bg-teal-600 text-white text-sm rounded-full font-medium hover:bg-teal-700 transition-colors"
+                        className="inline-block mt-6 px-4 py-2 bg-blue-600 text-white text-sm rounded-full font-medium hover:bg-blue-700 transition-colors"
                       >
                         {`${t('services.requestButtonPrefix')} ${service.title}`}
                       </motion.a>
