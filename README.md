@@ -25,6 +25,10 @@ A modern, responsive website for Riga3D Solutions, a professional 3D scanning an
 - FAQ section with animated accordion
 - Contact form section
 - Multi-language support (Latvian, Russian, English)
+  - Language-specific routing with SEO optimization
+  - Tiered translation approach based on content priority
+  - Language detection and preference saving
+  - Consistent terminology across platforms
 - Comprehensive SEO implementation
 - Image optimization with Cloudinary
 - Structured data for search engines
@@ -41,6 +45,17 @@ The website implements a comprehensive SEO strategy including:
 - Local SEO implementation for the Latvian market
 
 For detailed SEO strategy, see [SEO Documentation](./docs/technical/SEO.md).
+
+## Digital Marketing
+
+The project uses a visual-first social media strategy to showcase 3D scanning and printing capabilities:
+
+- Instagram for portfolio showcase and B2C engagement
+- LinkedIn for B2B client acquisition 
+- Case studies as core content that's repurposed across platforms
+- Website pillar pages instead of extensive blogging
+
+For detailed digital marketing approach, see [Social Media Strategy](./docs/technical/SOCIAL_MEDIA_STRATEGY.md).
 
 ## Getting Started
 
