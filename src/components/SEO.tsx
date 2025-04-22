@@ -1,15 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-
-interface SchemaType {
-  '@context': string;
-  '@type': string;
-  name: string;
-  image: string;
-  description: string;
-  url: string;
-  [key: string]: unknown;
-}
+import { 
+  BaseSchema,
+  generateLocalBusinessSchema 
+} from '../utils/schemaTypes';
 
 interface SEOProps {
   title?: string;
@@ -18,7 +12,7 @@ interface SEOProps {
   image?: string;
   url?: string;
   type?: string;
-  schema?: SchemaType;
+  schemas?: Array<BaseSchema>;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -28,19 +22,8 @@ const SEO: React.FC<SEOProps> = ({
   image = 'https://riga3d.lv/og-image.jpg',
   url = 'https://riga3d.lv',
   type = 'website',
-  schema,
+  schemas = [generateLocalBusinessSchema({})],
 }) => {
-  const defaultSchema: SchemaType = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Riga3D Solutions',
-    image: 'https://riga3d.lv/logo.jpg',
-    description: 'Professional 3D scanning and printing services in Riga, Latvia',
-    url: 'https://riga3d.lv',
-  };
-
-  const finalSchema = schema || defaultSchema;
-
   return (
     <Helmet>
       {/* Primary Meta Tags */}
@@ -64,9 +47,11 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="twitter:image" content={image} />
 
       {/* Schema.org markup */}
-      <script type="application/ld+json">
-        {JSON.stringify(finalSchema)}
-      </script>
+      {schemas.map((schema, index) => (
+        <script key={index} type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      ))}
     </Helmet>
   );
 };

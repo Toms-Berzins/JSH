@@ -5,10 +5,35 @@ import Portfolio from '../components/sections/Portfolio';
 import FAQ from '../components/sections/FAQ';
 import Contact from '../components/sections/Contact';
 import SectionSeparator from '../components/common/SectionSeparator';
+import SEO from '../components/SEO';
+import { 
+  generateLocalBusinessSchema, 
+  generateOrganizationSchema, 
+  generateWebSiteSchema,
+  generateBreadcrumbSchema 
+} from '../utils/schemaTypes';
 
 const Home: React.FC = () => {
+  // Generate schemas for the home page
+  const homeSchemas = [
+    generateLocalBusinessSchema({}),
+    generateOrganizationSchema({}),
+    generateWebSiteSchema({}),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://riga3d.lv' }
+    ])
+  ];
+
   return (
     <>
+      <SEO
+        title="Riga3D Solutions - Professional 3D Scanning & Printing Services in Latvia"
+        description="Expert 3D scanning and printing services in Riga, Latvia. Specializing in industrial 3D scanning, photogrammetry, and custom 3D printing solutions for architecture and manufacturing."
+        keywords="3D scanning Riga, 3D printing Latvia, photogrammetry services, 3D model creation, industrial 3D scanning"
+        url="https://riga3d.lv"
+        schemas={homeSchemas}
+      />
+
       {/* Hero section */}
       <div className="bg-gradient-to-br from-white via-indigo-50/30 to-indigo-50/50 dark:from-gray-900 dark:via-indigo-900/10 dark:to-indigo-900/20 backdrop-blur-sm">
         <Hero />
