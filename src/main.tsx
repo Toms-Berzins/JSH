@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom'; // Restore BrowserRouter
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import App from './App.tsx';
 import './index.css';
 
@@ -9,11 +10,12 @@ import './i18n';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter> {/* Restore BrowserRouter */}
-      {/* Wrap App with Suspense for loading translations */}
-      <React.Suspense fallback="Loading...">
-        <App />
-      </React.Suspense>
-    </BrowserRouter> {/* Restore BrowserRouter */}
+    <HelmetProvider>
+      <BrowserRouter>
+        <React.Suspense fallback="Loading...">
+          <App />
+        </React.Suspense>
+      </BrowserRouter>
+    </HelmetProvider>
   </React.StrictMode>
 );

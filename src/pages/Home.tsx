@@ -16,12 +16,10 @@ import {
 const Home: React.FC = () => {
   // Generate schemas for the home page
   const homeSchemas = [
-    generateLocalBusinessSchema({}),
-    generateOrganizationSchema({}),
-    generateWebSiteSchema({}),
-    generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://riga3d.lv' }
-    ])
+    generateLocalBusinessSchema(),
+    generateOrganizationSchema(),
+    generateWebSiteSchema(),
+    generateBreadcrumbSchema([])
   ];
 
   return (

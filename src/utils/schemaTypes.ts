@@ -1,38 +1,38 @@
-import { Service, PortfolioItem } from '../types';
-
+// Types definitions needed for schema generation
 export interface BaseSchema {
   '@context': string;
   '@type': string;
-  name: string;
-  description: string;
-  url: string;
-  [key: string]: unknown;
+  [key: string]: unknown; // Use unknown instead of any for better type safety
 }
 
 export interface LocalBusinessSchema extends BaseSchema {
   '@type': 'LocalBusiness';
+  name: string;
   image: string;
-  address?: {
+  logo: string;
+  telephone: string;
+  email: string;
+  description: string;
+  address: {
     '@type': 'PostalAddress';
     streetAddress: string;
     addressLocality: string;
-    addressRegion: string;
     postalCode: string;
     addressCountry: string;
   };
-  geo?: {
+  geo: {
     '@type': 'GeoCoordinates';
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
   };
-  telephone?: string;
-  priceRange?: string;
-  openingHoursSpecification?: {
+  url: string;
+  priceRange: string;
+  openingHoursSpecification: Array<{
     '@type': 'OpeningHoursSpecification';
-    dayOfWeek: string[];
+    dayOfWeek: string;
     opens: string;
     closes: string;
-  };
+  }>;
 }
 
 export interface ServiceSchema extends BaseSchema {
@@ -125,154 +125,253 @@ export interface WebSiteSchema extends BaseSchema {
   };
 }
 
-// Helper functions to generate schemas
-export const generateLocalBusinessSchema = (data: Partial<LocalBusinessSchema>): LocalBusinessSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'Riga3D Solutions',
-  image: 'https://riga3d.lv/logo.jpg',
-  description: 'Professional 3D scanning and printing services in Riga, Latvia',
-  url: 'https://riga3d.lv',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '[Your Street Address]',
-    addressLocality: 'Riga',
-    addressRegion: 'Riga',
-    postalCode: '[Your Postal Code]',
-    addressCountry: 'LV',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: '[Your Latitude]',
-    longitude: '[Your Longitude]',
-  },
-  telephone: '[Your Phone]',
-  priceRange: '€€',
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '09:00',
-    closes: '17:00',
-  },
-  ...data,
-});
+interface LocalBusinessProps {
+  name?: string;
+  image?: string;
+  logo?: string;
+  telephone?: string;
+  email?: string;
+  address?: {
+    streetAddress?: string;
+    addressLocality?: string;
+    postalCode?: string;
+    addressCountry?: string;
+  };
+  geo?: {
+    latitude?: number;
+    longitude?: number;
+  };
+  url?: string;
+  priceRange?: string;
+  openingHours?: string[];
+}
 
-export const generateServiceSchema = (service: Service): ServiceSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  name: service.title,
-  description: service.detailedDescription,
-  url: `https://riga3d.lv/services/${service.key}`,
-  provider: {
+interface ServiceProps {
+  name: string;
+  description: string;
+  image?: string;
+  provider?: {
+    name: string;
+    url: string;
+  };
+  areaServed?: string[];
+  offers?: {
+    price?: number;
+    priceCurrency?: string;
+    description?: string;
+  };
+}
+
+interface ProductProps {
+  name: string;
+  description: string;
+  image?: string;
+  brand?: string;
+  offers?: {
+    price?: number;
+    priceCurrency?: string;
+    availability?: string;
+  };
+}
+
+interface FAQProps {
+  questions: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+// Helper functions to generate schemas
+export const generateLocalBusinessSchema = ({
+  name = 'Riga3D Solutions',
+  image = 'https://riga3d.lv/images/company-building.jpg',
+  logo = 'https://riga3d.lv/images/logo.png',
+  telephone = '+371 20123456',
+  email = 'info@riga3d.lv',
+  address = {
+    streetAddress: 'Riga Technology Park, Building 3',
+    addressLocality: 'Riga',
+    postalCode: 'LV-1063',
+    addressCountry: 'Latvia',
+  },
+  geo = {
+    latitude: 56.9496,
+    longitude: 24.1052,
+  },
+  url = 'https://riga3d.lv',
+  priceRange = '€€',
+  openingHours = ['Mo-Fr 09:00-18:00', 'Sa 10:00-14:00']
+}: LocalBusinessProps = {}): LocalBusinessSchema => {
+  return {
+    '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
+    name,
+    image,
+    logo,
+    telephone,
+    email,
+    description: 'Professional 3D scanning and printing services in Riga, Latvia',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: address.streetAddress || '',
+      addressLocality: address.addressLocality || '',
+      postalCode: address.postalCode || '',
+      addressCountry: address.addressCountry || ''
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: geo.latitude || 0,
+      longitude: geo.longitude || 0
+    },
+    url,
+    priceRange,
+    openingHoursSpecification: openingHours.map((hours: string) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: hours.split(' ')[0],
+      opens: hours.split(' ')[1].split('-')[0],
+      closes: hours.split(' ')[1].split('-')[1]
+    }))
+  };
+};
+
+export const generateServiceSchema = ({
+  name,
+  description,
+  image,
+  provider = {
+    name: 'Riga3D Solutions',
+    url: 'https://riga3d.lv'
+  },
+  areaServed = ['Riga', 'Latvia', 'Baltic region'],
+  offers
+}: ServiceProps): BaseSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name,
+    description,
+    ...(image && { image }),
+    provider: {
+      '@type': 'Organization',
+      ...provider
+    },
+    areaServed: areaServed.map(area => ({
+      '@type': 'GeoCircle',
+      name: area
+    })),
+    ...(offers && {
+      offers: {
+        '@type': 'Offer',
+        ...offers
+      }
+    })
+  };
+};
+
+export const generateProductSchema = ({
+  name,
+  description,
+  image,
+  brand = 'Riga3D Solutions',
+  offers
+}: ProductProps): BaseSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    ...(image && { image }),
+    brand: {
+      '@type': 'Brand',
+      name: brand
+    },
+    ...(offers && {
+      offers: {
+        '@type': 'Offer',
+        ...offers
+      }
+    })
+  };
+};
+
+export const generateBreadcrumbSchema = (pathSegments: string[] = []): BreadcrumbListSchema => {
+  const items = [
+    {
+      '@type': 'ListItem' as const,
+      position: 1,
+      name: 'Home',
+      item: 'https://riga3d.lv'
+    }
+  ];
+
+  pathSegments.forEach((segment, index) => {
+    const name = segment.charAt(0).toUpperCase() + segment.slice(1);
+    const path = `https://riga3d.lv/${pathSegments.slice(0, index + 1).join('/')}`;
+    
+    items.push({
+      '@type': 'ListItem' as const,
+      position: index + 2,
+      name,
+      item: path
+    });
+  });
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList' as const,
+    itemListElement: items
+  };
+};
+
+export const generateFAQSchema = ({
+  questions
+}: FAQProps): FAQPageSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map(item => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  };
+};
+
+export const generateOrganizationSchema = (): BaseSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
     name: 'Riga3D Solutions',
     url: 'https://riga3d.lv',
-  },
-  areaServed: {
-    '@type': 'City',
-    name: 'Riga',
-    containedInPlace: {
-      '@type': 'Country',
-      name: 'Latvia',
-    },
-  },
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: `${service.title} Service`,
-    itemListElement: [{
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: service.title,
-        description: service.description,
-      },
-    }],
-  },
-});
+    logo: 'https://riga3d.lv/images/logo.png',
+    sameAs: [
+      'https://facebook.com/riga3dsolutions',
+      'https://instagram.com/riga3d',
+      'https://linkedin.com/company/riga3d-solutions'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+371 20123456',
+      contactType: 'customer service',
+      availableLanguage: ['Latvian', 'English', 'Russian']
+    }
+  };
+};
 
-export const generateProductSchema = (item: PortfolioItem): ProductSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: item.title,
-  description: item.description,
-  image: `https://riga3d.lv/portfolio/${item.id}.jpg`,
-  url: `https://riga3d.lv/portfolio/${item.id}`,
-  brand: {
-    '@type': 'Brand',
+export const generateWebSiteSchema = (): BaseSchema => {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
     name: 'Riga3D Solutions',
-  },
-  category: '3D Printed Product',
-  material: 'Various',
-  offers: {
-    '@type': 'Offer',
-    availability: 'https://schema.org/InStock',
-    price: 'Contact for quote',
-    priceCurrency: 'EUR',
-  },
-});
-
-export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>): BreadcrumbListSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  name: 'Breadcrumb',
-  description: 'Navigation breadcrumb',
-  url: 'https://riga3d.lv',
-  itemListElement: items.map((item, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    name: item.name,
-    item: item.url,
-  })),
-});
-
-export const generateFAQSchema = (faqs: Array<{ question: string; answer: string }>): FAQPageSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  name: 'Frequently Asked Questions',
-  description: 'Common questions about our 3D scanning and printing services',
-  url: 'https://riga3d.lv/faq',
-  mainEntity: faqs.map(faq => ({
-    '@type': 'Question',
-    name: faq.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: faq.answer,
-    },
-  })),
-});
-
-export const generateOrganizationSchema = (data: Partial<OrganizationSchema>): OrganizationSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Riga3D Solutions',
-  description: 'Professional 3D scanning and printing services in Riga, Latvia',
-  url: 'https://riga3d.lv',
-  logo: 'https://riga3d.lv/logo.jpg',
-  sameAs: [
-    'https://www.facebook.com/riga3d',
-    'https://www.linkedin.com/company/riga3d',
-    'https://www.instagram.com/riga3d'
-  ],
-  contactPoint: {
-    '@type': 'ContactPoint',
-    telephone: '[Your Phone]',
-    contactType: 'customer service',
-    areaServed: 'LV',
-    availableLanguage: ['en', 'lv', 'ru']
-  },
-  ...data,
-});
-
-export const generateWebSiteSchema = (data: Partial<WebSiteSchema>): WebSiteSchema => ({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'Riga3D Solutions',
-  description: 'Professional 3D scanning and printing services in Riga, Latvia',
-  url: 'https://riga3d.lv',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://riga3d.lv/search?q={search_term_string}',
-    'query-input': 'required name=search_term_string'
-  },
-  ...data,
-}); 
+    url: 'https://riga3d.lv',
+    description: 'Professional 3D scanning and printing services in Riga, Latvia',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://riga3d.lv/search?q={search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  };
+}; 

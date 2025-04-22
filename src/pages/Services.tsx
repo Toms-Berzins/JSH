@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
-import { generateServiceSchema } from '../utils/schemaTypes';
+import { generateServiceSchema, generateBreadcrumbSchema } from '../utils/schemaTypes';
 import { Service } from '../types';
 
 const Services: React.FC = () => {
@@ -9,7 +9,19 @@ const Services: React.FC = () => {
   const services = t('services.list', { returnObjects: true }) as Service[];
 
   // Generate schemas for each service
-  const serviceSchemas = services.map(service => generateServiceSchema(service));
+  const serviceSchemas = services.map(service => 
+    generateServiceSchema({
+      name: service.title,
+      description: service.detailedDescription,
+      image: `https://riga3d.lv/images/services/${service.key}.jpg`,
+      offers: {
+        description: service.description
+      }
+    })
+  );
+
+  // Add breadcrumb schema
+  serviceSchemas.push(generateBreadcrumbSchema(['services']));
 
   return (
     <>

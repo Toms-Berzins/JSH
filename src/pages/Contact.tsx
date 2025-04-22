@@ -9,11 +9,8 @@ import {
 const ContactPage: React.FC = () => {
   // Generate schemas for the contact page
   const contactSchemas = [
-    generateLocalBusinessSchema({}),
-    generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://riga3d.lv' },
-      { name: 'Contact', url: 'https://riga3d.lv/contact' }
-    ])
+    generateLocalBusinessSchema(),
+    generateBreadcrumbSchema(['contact'])
   ];
 
   return (

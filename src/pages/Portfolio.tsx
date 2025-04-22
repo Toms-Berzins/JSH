@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
-import { generateProductSchema } from '../utils/schemaTypes';
+import { generateProductSchema, generateBreadcrumbSchema } from '../utils/schemaTypes';
 import { PortfolioItem } from '../types';
 
 const Portfolio: React.FC = () => {
@@ -9,7 +9,18 @@ const Portfolio: React.FC = () => {
   const portfolioItems = t('portfolio.list', { returnObjects: true }) as PortfolioItem[];
 
   // Generate schemas for each portfolio item
-  const productSchemas = portfolioItems.map(item => generateProductSchema(item));
+  const productSchemas = portfolioItems.map(item => generateProductSchema({
+    name: item.title,
+    description: item.description,
+    image: `https://riga3d.lv/images/portfolio/${item.id}.jpg`,
+    offers: {
+      availability: 'https://schema.org/InStock',
+      priceCurrency: 'EUR'
+    }
+  }));
+
+  // Add breadcrumb schema
+  productSchemas.push(generateBreadcrumbSchema(['portfolio']));
 
   return (
     <>
