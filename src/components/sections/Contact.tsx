@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+
+declare global {
+  interface Window {
+    grecaptcha: any;
+  }
+}
 
 const Contact: React.FC = () => {
   const { t } = useTranslation();
@@ -28,6 +34,7 @@ const Contact: React.FC = () => {
   }>({});
 
   const [activeField, setActiveField] = useState<string | null>(null);
+  const [recaptchaToken, setRecaptchaToken] = useState<string>('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -75,6 +82,28 @@ const Contact: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  useEffect(() => {
+    // Load reCAPTCHA script
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js?render=6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y';
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Initialize reCAPTCHA
+    script.onload = () => {
+      window.grecaptcha.ready(() => {
+        window.grecaptcha.execute('6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y', { action: 'contact' })
+          .then((token: string) => {
+            setRecaptchaToken(token);
+          });
+      });
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     
@@ -84,25 +113,47 @@ const Contact: React.FC = () => {
     
     setFormStatus({ submitting: true, submitted: false, error: false });
     
-    // Mock submission - replace with actual API call
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      console.log('Form submitted:', formData);
-      
-      // Submission successful
-      setFormStatus({ submitting: false, submitted: true, error: false });
-      
-      // Reset form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        projectType: '',
-        message: ''
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
       });
       
+      // Add reCAPTCHA token
+      formDataToSend.append('g-recaptcha-response', recaptchaToken);
+      
+      // Add honeypot field
+      formDataToSend.append('_gotcha', '');
+
+      const response = await fetch('https://formspree.io/f/xkgroyzr', {
+        method: 'POST',
+        body: formDataToSend,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setFormStatus({ submitting: false, submitted: true, error: false });
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          projectType: '',
+          message: ''
+        });
+        
+        // Refresh reCAPTCHA token
+        window.grecaptcha.ready(() => {
+          window.grecaptcha.execute('6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y', { action: 'contact' })
+            .then((token: string) => {
+              setRecaptchaToken(token);
+            });
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       setFormStatus({ submitting: false, submitted: false, error: true });
@@ -436,11 +487,11 @@ const Contact: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             <motion.div
               whileHover={{ y: -5 }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm"
+              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300"
             >
               <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-primary-100 dark:bg-primary-900/30 text-primary-500 dark:text-primary-400 rounded-xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -448,12 +499,33 @@ const Contact: React.FC = () => {
                 </svg>
               </div>
               <h3 className="text-lg font-medium mb-2 text-center">{t('contact.info.call.title')}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">{t('contact.info.call.detail')}</p>
+              <div className="flex flex-col items-center space-y-2">
+                <a 
+                  href="tel:+37120123456" 
+                  className="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                  </svg>
+                  +371 20 123 456
+                </a>
+                <a 
+                  href="https://wa.me/37120123456" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-green-500 hover:text-green-600 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
             </motion.div>
 
             <motion.div
               whileHover={{ y: -5 }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm"
+              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300"
             >
               <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-primary-100 dark:bg-primary-900/30 text-primary-500 dark:text-primary-400 rounded-xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -461,12 +533,22 @@ const Contact: React.FC = () => {
                 </svg>
               </div>
               <h3 className="text-lg font-medium mb-2 text-center">{t('contact.info.email.title')}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">{t('contact.info.email.detail')}</p>
+              <div className="flex flex-col items-center space-y-2">
+                <a 
+                  href="mailto:info@riga3d.lv" 
+                  className="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                  info@riga3d.lv
+                </a>
+              </div>
             </motion.div>
 
             <motion.div
               whileHover={{ y: -5 }}
-              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm col-span-2"
+              className="p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg backdrop-blur-sm hover:shadow-xl transition-all duration-300 md:col-span-2"
             >
               <div className="w-12 h-12 mx-auto mb-4 flex items-center justify-center bg-primary-100 dark:bg-primary-900/30 text-primary-500 dark:text-primary-400 rounded-xl">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -475,7 +557,30 @@ const Contact: React.FC = () => {
                 </svg>
               </div>
               <h3 className="text-lg font-medium mb-2 text-center">{t('contact.info.address.title')}</h3>
-              <p className="text-gray-600 dark:text-gray-300 text-center">{t('contact.info.address.detail')}</p>
+              <div className="flex flex-col items-center space-y-2">
+                <a 
+                  href="https://www.google.com/maps/place/Riga" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 transition-colors duration-300 flex items-center gap-2"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
+                  Riga, Latvia
+                </a>
+                <div className="mt-4 w-full h-48 rounded-lg overflow-hidden">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d17408.1252012001!2d24.1055005!3d56.9496487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46eecfb0e5073ded%3A0x400cfcd68f2fe30!2sRiga%2C%20Latvia!5e0!3m2!1sen!2slv!4v1645541234567!5m2!1sen!2slv" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>

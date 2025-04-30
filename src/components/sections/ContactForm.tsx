@@ -1,91 +1,53 @@
-import { useState, useEffect } from 'react';
-import { handleContactForm, type ContactFormData } from '../../utils/contactUtils';
-import { emailConfig } from '../../config/emailConfig';
-
-declare global {
-  interface Window {
-    grecaptcha: {
-      ready: (callback: () => void) => void;
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-    };
-  }
-}
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const ContactForm = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-    recaptchaToken: '',
-  });
+  const { t } = useTranslation();
   const [status, setStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    // Load reCAPTCHA script
-    const script = document.createElement('script');
-    script.src = `https://www.google.com/recaptcha/api.js?render=${emailConfig.recaptcha.siteKey}`;
-    script.async = true;
-    document.body.appendChild(script);
-
-    // Get reCAPTCHA token
-    window.grecaptcha?.ready(() => {
-      window.grecaptcha
-        .execute(emailConfig.recaptcha.siteKey, { action: 'contact' })
-        .then((token) => {
-          setFormData(prev => ({ ...prev, recaptchaToken: token }));
-        });
-    });
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setStatus(null);
 
-    if (!formData.recaptchaToken) {
-      setStatus({
-        success: false,
-        message: 'Please wait while we verify you are not a robot...',
-      });
-      setIsSubmitting(false);
-      return;
-    }
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Log form data for debugging
+    console.log('Form data:', Object.fromEntries(formData));
 
     try {
-      const result = await handleContactForm(formData);
-      setStatus(result);
-      if (result.success) {
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: '',
-          recaptchaToken: '',
+      const response = await fetch('https://formspree.io/f/xkgroyzr', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      // Log response for debugging
+      console.log('Formspree response:', response);
+
+      if (response.ok) {
+        setStatus({
+          success: true,
+          message: t('contact.success.message')
         });
-        // Refresh reCAPTCHA token
-        window.grecaptcha?.ready(() => {
-          window.grecaptcha
-            .execute(emailConfig.recaptcha.siteKey, { action: 'contact' })
-            .then((token) => {
-              setFormData(prev => ({ ...prev, recaptchaToken: token }));
-            });
+        form.reset();
+      } else {
+        const errorData = await response.json();
+        console.error('Formspree error:', errorData);
+        setStatus({
+          success: false,
+          message: t('contact.error.message')
         });
       }
     } catch {
+      console.error('Network error occurred');
       setStatus({
         success: false,
-        message: 'An unexpected error occurred. Please try again later.',
+        message: t('contact.error.message')
       });
     } finally {
       setIsSubmitting(false);
@@ -94,7 +56,7 @@ export const ContactForm = () => {
 
   return (
     <div id="contact" className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Get In Touch</h2>
+      <h2 className="text-2xl font-bold mb-6 text-gray-800">{t('contact.title')}</h2>
       
       {status && (
         <div
@@ -109,31 +71,27 @@ export const ContactForm = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Name
+            {t('contact.fields.name.label')}
           </label>
           <input
             type="text"
             id="name"
             name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
           />
         </div>
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
+            {t('contact.fields.email.label')}
           </label>
           <input
             type="email"
             id="email"
             name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
           />
         </div>
 
@@ -145,38 +103,34 @@ export const ContactForm = () => {
             type="text"
             id="subject"
             name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
           />
         </div>
 
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-            Message
+            {t('contact.fields.message.label')}
           </label>
           <textarea
             id="message"
             name="message"
-            value={formData.message}
-            onChange={handleChange}
             rows={4}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
           />
         </div>
 
         <button
           type="submit"
-          disabled={isSubmitting || !formData.recaptchaToken}
+          disabled={isSubmitting}
           className={`w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
-            isSubmitting || !formData.recaptchaToken
+            isSubmitting
               ? 'bg-primary-400 cursor-not-allowed'
               : 'bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500'
           }`}
         >
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? t('contact.submitting') : t('contact.send')}
         </button>
       </form>
     </div>
