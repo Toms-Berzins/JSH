@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 
 declare global {
   interface Window {
-    grecaptcha: any;
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
   }
 }
 
@@ -85,22 +88,28 @@ const Contact: React.FC = () => {
   useEffect(() => {
     // Load reCAPTCHA script
     const script = document.createElement('script');
-    script.src = 'https://www.google.com/recaptcha/api.js?render=6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y';
+    script.src = `https://www.google.com/recaptcha/api.js?render=${import.meta.env.VITE_RECAPTCHA_SITE_KEY}`;
     script.async = true;
+    script.defer = true;
     document.body.appendChild(script);
 
     // Initialize reCAPTCHA
     script.onload = () => {
       window.grecaptcha.ready(() => {
-        window.grecaptcha.execute('6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y', { action: 'contact' })
+        window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY!, { action: 'contact' })
           .then((token: string) => {
             setRecaptchaToken(token);
+          })
+          .catch((error: Error) => {
+            console.error('reCAPTCHA error:', error);
           });
       });
     };
 
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
@@ -146,9 +155,12 @@ const Contact: React.FC = () => {
         
         // Refresh reCAPTCHA token
         window.grecaptcha.ready(() => {
-          window.grecaptcha.execute('6LdY5ZopAAAAAPX5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y5Y', { action: 'contact' })
+          window.grecaptcha.execute(import.meta.env.VITE_RECAPTCHA_SITE_KEY!, { action: 'contact' })
             .then((token: string) => {
               setRecaptchaToken(token);
+            })
+            .catch((error: Error) => {
+              console.error('reCAPTCHA error:', error);
             });
         });
       } else {

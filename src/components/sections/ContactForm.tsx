@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+// Add runtime configuration for Vercel
+export const runtime = 'edge';
+export const dynamic = 'force-dynamic';
+
 export const ContactForm = () => {
   const { t } = useTranslation();
   const [status, setStatus] = useState<{ success: boolean; message: string } | null>(null);
@@ -18,7 +22,8 @@ export const ContactForm = () => {
     console.log('Form data:', Object.fromEntries(formData));
 
     try {
-      const response = await fetch('https://formspree.io/f/xkgroyzr', {
+      // Use a relative path to your API route
+      const response = await fetch('/api/contact', {
         method: 'POST',
         body: formData,
         headers: {
@@ -37,14 +42,14 @@ export const ContactForm = () => {
         form.reset();
       } else {
         const errorData = await response.json();
-        console.error('Formspree error:', errorData);
+        console.error('Form submission error:', errorData);
         setStatus({
           success: false,
           message: t('contact.error.message')
         });
       }
-    } catch {
-      console.error('Network error occurred');
+    } catch (error) {
+      console.error('Network error:', error);
       setStatus({
         success: false,
         message: t('contact.error.message')
