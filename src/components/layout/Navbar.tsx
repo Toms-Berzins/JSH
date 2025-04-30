@@ -92,8 +92,8 @@ const Navbar: React.FC<NavbarProps> = ({
                   href={item.href}
                   className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
                     isActiveRoute(item.key)
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 backdrop-blur-sm'
+                      ? 'bg-primary-500 text-white shadow-lg'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-gray-800/80 backdrop-blur-sm'
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
@@ -111,8 +111,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
                 className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
                   isLanguageMenuOpen
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'bg-gray-100/80 dark:bg-gray-800/80 backdrop-blur-sm'
+                    ? 'bg-primary-500 text-white shadow-lg'
+                    : 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'
                 }`}
                 aria-label={t('languageSwitcher.changeLanguage')}
                 aria-expanded={isLanguageMenuOpen}
@@ -134,8 +134,8 @@ const Navbar: React.FC<NavbarProps> = ({
                         }}
                         className={`block w-full text-left px-4 py-2 text-sm transition-all duration-200 ${
                           i18n.resolvedLanguage === lang.code
-                            ? 'bg-blue-600 text-white'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-primary-500 text-white'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700'
                         }`}
                       >
                         {lang.name}
@@ -149,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({
             {/* Contact button */}
             <a 
               href={`/${i18n.language}#contact`}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              className="px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToElement('contact');
@@ -165,8 +165,8 @@ const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`p-2 rounded-md transition-all duration-300 hover:scale-105 ${
                 mobileMenuOpen
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-gray-800/80 backdrop-blur-sm'
+                  ? 'bg-primary-500 text-white shadow-lg'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-gray-800/80 backdrop-blur-sm'
               }`}
               aria-label={mobileMenuOpen ? t('navbar.closeMenu') : t('navbar.openMenu')}
               aria-expanded={mobileMenuOpen}
@@ -190,8 +190,8 @@ const Navbar: React.FC<NavbarProps> = ({
               href={item.href}
               className={`block px-3 py-2 text-base font-medium rounded-md transition-all duration-300 hover:scale-105 ${
                 isActiveRoute(item.key)
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100/80 dark:hover:bg-gray-700/80'
+                  ? 'bg-primary-500 text-white shadow-lg'
+                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-gray-700/80'
               }`}
               onClick={(e) => {
                 e.preventDefault();
@@ -206,7 +206,7 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile contact button */}
           <a
             href={`/${i18n.language}#contact`}
-            className="block w-full text-center mt-2 px-4 py-2 text-base font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+            className="block w-full text-center mt-2 px-4 py-2 text-base font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
             onClick={(e) => {
               e.preventDefault();
               scrollToElement('contact');
@@ -227,8 +227,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 }}
                 className={`flex-1 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
                   i18n.resolvedLanguage === lang.code
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'bg-gray-200/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300'
+                    ? 'bg-primary-500 text-white shadow-lg'
+                    : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300'
                 }`}
               >
                 {lang.name}

@@ -13,7 +13,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.1 }}
-          className="text-lg md:text-xl text-blue-600 dark:text-blue-400 font-medium mb-4 tracking-wide"
+          className="text-lg md:text-xl text-primary-500 dark:text-primary-400 font-medium mb-4 tracking-wide"
         >
           {t('hero.greeting')} <span className="font-semibold">{t('hero.name')}</span>
         </motion.div>
@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
             href="#portfolio"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-full font-medium hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center px-8 py-3 bg-primary-500 text-white rounded-full font-medium hover:bg-primary-600 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             {t('hero.cta')}
             <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

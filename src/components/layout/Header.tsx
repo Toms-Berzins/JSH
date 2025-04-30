@@ -39,7 +39,7 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to={`/${i18n.language}`} className="flex items-center">
-              <User className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+              <User className="h-7 w-7 text-primary-500 dark:text-primary-400" />
               <span className="ml-2 text-xl font-semibold">{t('hero.name')}</span>
             </Link>
           </div>

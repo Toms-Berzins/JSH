@@ -75,7 +75,7 @@ const Services: React.FC = () => {
                 <p className="text-gray-600 dark:text-gray-300 mb-4">{service.description}</p>
                 <div className="mt-4">
                   <button 
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 transition-colors"
                     aria-label={`${t('services.requestButtonPrefix')} ${service.title}`}
                   >
                     {t('services.requestButtonPrefix')} {service.title}

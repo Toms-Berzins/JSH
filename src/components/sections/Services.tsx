@@ -60,7 +60,7 @@ const Services: React.FC = () => {
                 onClick={() => toggleExpand(index)}
               >
                 <div className="flex items-center justify-between mb-5">
-                  <div className="text-blue-600 dark:text-blue-400">{service.icon}</div>
+                  <div className="text-primary-500 dark:text-primary-400">{service.icon}</div>
                   <motion.div
                     animate={{ rotate: expandedIndex === index ? 180 : 0 }}
                     transition={{ duration: 0.3 }}
@@ -94,7 +94,7 @@ const Services: React.FC = () => {
                           <ul className="space-y-1">
                             {service.benefits.map((benefit, i) => (
                               <li key={i} className="flex items-start">
-                                <ArrowRight className="h-4 w-4 text-blue-500 mt-1 mr-2 flex-shrink-0" />
+                                <ArrowRight className="h-4 w-4 text-primary-500 mt-1 mr-2 flex-shrink-0" />
                                 <span className="text-sm text-gray-600 dark:text-gray-300">{benefit}</span>
                               </li>
                             ))}
@@ -108,7 +108,7 @@ const Services: React.FC = () => {
                           <ul className="space-y-1">
                             {service.applications.map((application, i) => (
                               <li key={i} className="flex items-start">
-                                <ArrowRight className="h-4 w-4 text-blue-500 mt-1 mr-2 flex-shrink-0" />
+                                <ArrowRight className="h-4 w-4 text-primary-500 mt-1 mr-2 flex-shrink-0" />
                                 <span className="text-sm text-gray-600 dark:text-gray-300">{application}</span>
                               </li>
                             ))}
@@ -129,7 +129,7 @@ const Services: React.FC = () => {
                         href="#contact"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
-                        className="inline-block mt-6 px-4 py-2 bg-blue-600 text-white text-sm rounded-full font-medium hover:bg-blue-700 transition-colors"
+                        className="inline-block mt-6 px-4 py-2 bg-primary-500 text-white text-sm rounded-full font-medium hover:bg-primary-600 transition-colors"
                       >
                         {`${t('services.requestButtonPrefix')} ${service.title}`}
                       </motion.a>
