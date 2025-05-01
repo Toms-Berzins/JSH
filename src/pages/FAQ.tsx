@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import SEO from '../components/SEO';
+import SEO from '../components/common/SEO';
+import FAQSection from '../components/sections/FAQ';
 import { generateFAQSchema, generateBreadcrumbSchema } from '../utils/schemaTypes';
 
 interface FAQItem {
@@ -8,7 +9,7 @@ interface FAQItem {
   answer: string;
 }
 
-const FAQ: React.FC = () => {
+const FAQPage: React.FC = () => {
   const { t } = useTranslation();
   const faqs = t('faq.list', { returnObjects: true }) as FAQItem[];
 
@@ -23,16 +24,13 @@ const FAQ: React.FC = () => {
   return (
     <>
       <SEO
-        title="FAQ - Riga3D Solutions"
-        description="Find answers to common questions about our 3D scanning and printing services. Learn about our processes, capabilities, and how we can help with your project."
-        keywords="3D scanning FAQ, 3D printing questions, photogrammetry FAQ, 3D modeling FAQ Latvia"
-        url="https://riga3d.lv/faq"
+        title={`${t('faq.title')} - ${t('hero.name')}`}
+        description={t('faq.description')}
         schemas={[faqSchema, breadcrumbSchema]}
       />
-      
-      {/* Rest of your FAQ page content */}
+      <FAQSection />
     </>
   );
 };
 
-export default FAQ; 
+export default FAQPage; 

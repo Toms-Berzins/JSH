@@ -1,29 +1,40 @@
 import React from 'react';
-import SEO from '../components/SEO';
-import Contact from '../components/sections/Contact';
+import { useTranslation } from 'react-i18next';
+import SEO from '../components/common/SEO';
+import ContactSection from '../components/sections/Contact';
 import { 
   generateLocalBusinessSchema,
   generateBreadcrumbSchema
 } from '../utils/schemaTypes';
 
 const ContactPage: React.FC = () => {
+  const { t } = useTranslation();
+
   // Generate schemas for the contact page
   const contactSchemas = [
-    generateLocalBusinessSchema(),
+    generateLocalBusinessSchema({
+      name: t('hero.name'),
+      description: t('hero.description'),
+      telephone: t('contact.phone'),
+      email: t('contact.email'),
+      address: {
+        streetAddress: t('contact.address.street'),
+        addressLocality: t('contact.address.city'),
+        postalCode: t('contact.address.postalCode'),
+        addressCountry: t('contact.address.country')
+      }
+    }),
     generateBreadcrumbSchema(['contact'])
   ];
 
   return (
     <>
       <SEO
-        title="Contact Us - Riga3D Solutions"
-        description="Get in touch with Riga3D Solutions for professional 3D scanning and printing services in Latvia. We're here to help with your project needs."
-        keywords="contact 3D scanning Riga, 3D printing Latvia contact, photogrammetry services contact"
-        url="https://riga3d.lv/contact"
+        title={`${t('contact.title')} - ${t('hero.name')}`}
+        description={t('contact.description')}
         schemas={contactSchemas}
       />
-      
-      <Contact />
+      <ContactSection />
     </>
   );
 };

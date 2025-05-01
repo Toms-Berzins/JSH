@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Services from './pages/Services';
+import Portfolio from './pages/Portfolio';
+import FAQ from './pages/FAQ';
+import Contact from './pages/Contact';
+import NotFound from './pages/NotFound';
 
 // Potentially add other pages here later (e.g., NotFound, ProjectDetail)
 
@@ -12,7 +16,7 @@ function App() {
   const { i18n } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
-  const supportedLanguages = ['en', 'lv', 'ru'];
+  const supportedLanguages = useMemo(() => ['en', 'lv', 'ru'], []);
   
   // Check if the current path has a language prefix
   const pathSegments = location.pathname.split('/').filter(Boolean);
@@ -21,21 +25,16 @@ function App() {
   
   // Handle language detection and routing
   useEffect(() => {
-    // If the URL doesn't have a language prefix, redirect to the preferred language
     if (!isLanguagePrefix) {
       const preferredLanguage = localStorage.getItem('i18nextLng') || i18n.language || 'en';
       const langToUse = supportedLanguages.includes(preferredLanguage) ? preferredLanguage : 'en';
       
-      // Update the URL with the language prefix
       const newPath = `/${langToUse}${location.pathname === '/' ? '' : location.pathname}`;
       navigate(newPath, { replace: true });
-    } else {
-      // Ensure i18n language matches URL language
-      if (i18n.language !== currentLangCode) {
-        i18n.changeLanguage(currentLangCode);
-      }
+    } else if (i18n.language !== currentLangCode) {
+      i18n.changeLanguage(currentLangCode);
     }
-  }, [location.pathname, i18n, navigate, isLanguagePrefix, currentLangCode]);
+  }, [location.pathname, i18n, navigate, isLanguagePrefix, currentLangCode, supportedLanguages]);
   
   return (
     <Layout>
@@ -52,17 +51,12 @@ function App() {
               
               {/* Add other content pages here */}
               <Route path="services" element={<Services />} />
-              {/* 
               <Route path="portfolio" element={<Portfolio />} />
               <Route path="faq" element={<FAQ />} />
               <Route path="contact" element={<Contact />} />
               
-              And if needed, nested dynamic routes:
-              <Route path="portfolio/:projectId" element={<ProjectDetail />} />
-              */}
-              
               {/* Fallback for nested routes */}
-              <Route path="*" element={<Navigate to={`/${lang}`} replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           } />
         ))}

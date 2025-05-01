@@ -200,5 +200,10 @@
   },
   "languageSwitcher": {
     "changeLanguage": "Mainīt valodu"
+  },
+  "notFound": {
+    "title": "Lapa Nav Atrasta",
+    "description": "Lapa, kuru meklējat, neeksistē vai ir pārvietota.",
+    "backToHome": "Atpakaļ uz Sākumlapu"
   }
 }

@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { 
   BaseSchema,
   generateLocalBusinessSchema 
-} from '../utils/schemaTypes';
-import { generateHreflangTags, getPathWithoutLangPrefix } from '../utils/hreflang';
+} from "../../utils/schemaTypes";
+import { generateHreflangTags, getPathWithoutLangPrefix } from "../../utils/hreflang";
 
 interface HreflangLink {
   rel: string;

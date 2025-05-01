@@ -5,7 +5,7 @@ import Portfolio from '../components/sections/Portfolio';
 import FAQ from '../components/sections/FAQ';
 import Contact from '../components/sections/Contact';
 import SectionSeparator from '../components/common/SectionSeparator';
-import SEO from '../components/SEO';
+import SEO from '../components/common/SEO';
 import { 
   generateLocalBusinessSchema, 
   generateOrganizationSchema, 

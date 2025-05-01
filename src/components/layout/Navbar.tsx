@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Menu, X, Globe, ChevronDown } from 'lucide-react';
-import { i18n as I18nType } from 'i18next';
+import { Menu, X } from 'lucide-react';
 import { scrollToElement } from '../../utils/scrollUtils';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 
 interface NavbarProps {
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (open: boolean) => void;
-  i18n: I18nType;
-  changeLanguage: (lng: string) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
   mobileMenuOpen, 
-  setMobileMenuOpen, 
-  i18n,
-  changeLanguage 
+  setMobileMenuOpen
 }) => {
-  const { t } = useTranslation();
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -54,12 +49,6 @@ const Navbar: React.FC<NavbarProps> = ({
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
-
-  const languages = [
-    { code: 'en', name: 'EN' },
-    { code: 'lv', name: 'LV' },
-    { code: 'ru', name: 'RU' },
-  ];
 
   // Navigation items
   const navItems = [
@@ -105,46 +94,8 @@ const Navbar: React.FC<NavbarProps> = ({
               ))}
             </div>
             
-            {/* Language switcher with dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
-                  isLanguageMenuOpen
-                    ? 'bg-primary-500 text-white shadow-lg'
-                    : 'bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm'
-                }`}
-                aria-label={t('languageSwitcher.changeLanguage')}
-                aria-expanded={isLanguageMenuOpen}
-              >
-                <Globe className="h-4 w-4" />
-                <span>{i18n.resolvedLanguage?.toUpperCase() || 'EN'}</span>
-                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isLanguageMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              {isLanguageMenuOpen && (
-                <div className="absolute right-0 mt-2 w-32 rounded-md shadow-lg bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm ring-1 ring-black ring-opacity-5 animate-fadeIn">
-                  <div className="py-1">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => {
-                          changeLanguage(lang.code);
-                          setIsLanguageMenuOpen(false);
-                        }}
-                        className={`block w-full text-left px-4 py-2 text-sm transition-all duration-200 ${
-                          i18n.resolvedLanguage === lang.code
-                            ? 'bg-primary-500 text-white'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-700'
-                        }`}
-                      >
-                        {lang.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* Language switcher */}
+            <LanguageSwitcher />
             
             {/* Contact button */}
             <a 
@@ -163,13 +114,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-md transition-all duration-300 hover:scale-105 ${
-                mobileMenuOpen
-                  ? 'bg-primary-500 text-white shadow-lg'
-                  : 'text-gray-600 dark:text-gray-300 hover:bg-white/80 dark:hover:bg-gray-800/80 backdrop-blur-sm'
-              }`}
-              aria-label={mobileMenuOpen ? t('navbar.closeMenu') : t('navbar.openMenu')}
-              aria-expanded={mobileMenuOpen}
+              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               {mobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -217,23 +162,8 @@ const Navbar: React.FC<NavbarProps> = ({
           </a>
           
           {/* Mobile language switcher */}
-          <div className="flex space-x-2 mt-3 px-3">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => {
-                  changeLanguage(lang.code);
-                  setMobileMenuOpen(false);
-                }}
-                className={`flex-1 py-2 text-sm font-medium rounded-md transition-all duration-300 hover:scale-105 ${
-                  i18n.resolvedLanguage === lang.code
-                    ? 'bg-primary-500 text-white shadow-lg'
-                    : 'bg-white/80 dark:bg-gray-700/80 text-gray-700 dark:text-gray-300'
-                }`}
-              >
-                {lang.name}
-              </button>
-            ))}
+          <div className="mt-2">
+            <LanguageSwitcher />
           </div>
         </div>
       )}
